@@ -30,30 +30,47 @@ public class ExcelWritter {
 		return workbook;
 	}
 
-	public static void write(Sheet sheet) {
+	public static Map<String, Object[]> takeUserInput() {
 		Map<String, Object[]> data = new TreeMap<String, Object[]>();
-		Scanner scan =new Scanner(System.in);
-		System.out.println("enter details to feed------"); 
-		System.out.println("ID\t NAME\t LASTNAME");
 		data.put("1", new Object[] { "ID", "NAME", "LASTNAME" });
-		data.put("2", new Object[] { 1, "Amit", "Shukla" });
-		data.put("3", new Object[] { 2, "Lokesh", "Gupta" });
-		data.put("4", new Object[] { 3, "John", "Adwards" });
-		data.put("5", new Object[] { 4, "Brian", "Schultz" });
-		data.put("6", new Object[] { 5, "Shiv", "Bharadwaj" });
-		data.put("7", new Object[] { 6.7, true, "D" });
-		// Iterate over data and write to sheet
-		
-		Set<String> keyset = data.keySet();//Getting{1,2,3,4,5,6}
-		
+		Scanner scan = new Scanner(System.in);
+		System.err.println("Enter the details as per thr format given-------");
+		System.err.println("ID\nName\nLastName");
+		String id = null;
+		String name = null;
+		String lname = null;
+		int k = 1;
+		while (true) {
+			id = scan.nextLine();
+			name = scan.nextLine();
+			lname = scan.nextLine();
+			k = k + 1;
+			data.put(String.valueOf(k), new Object[] { id, name, lname });
+			System.err.println("Alert! Do you want to continue....(y/n)");
+
+			String i = scan.nextLine();
+			if (i.equalsIgnoreCase("n")) {
+				break;
+			}
+		}
+		return data;
+	}
+
+	public static void write(Sheet sheet) {
+		Map<String, Object[]> data = takeUserInput();
+
+		Set<String> keyset = data.keySet();// Getting{1,2,3,4,5,6}
+
 		int rownum = 0;
 		for (String key : keyset) {
 			Row row = sheet.createRow(rownum++);
+
 			Object[] objArr = data.get(key);
-			
+
 			int cellnum = 0;
 			for (Object obj : objArr) {
 				Cell cell = row.createCell(cellnum++);
+
 				if (obj instanceof String)
 					cell.setCellValue((String) obj);
 				else if (obj instanceof Integer)

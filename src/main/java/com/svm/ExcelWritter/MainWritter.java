@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 public class MainWritter {
 
-	public static final String DESTINATION_FILE_NAME = "java_demo.xls";
+	public static final String DESTINATION_FILE_NAME = "java_demo.xlsx";
 
 	public static void main(String[] args) throws IOException {
 
@@ -21,6 +21,6 @@ public class MainWritter {
 		workbook.write(out);
 		out.close();
 		workbook.close();
-		System.out.println( DESTINATION_FILE_NAME+" written successfully on disk.");
+		System.out.println("Hey! Your file " + DESTINATION_FILE_NAME + " has been written successfully on disk.");
 	}
 }
